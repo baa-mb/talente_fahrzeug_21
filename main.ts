@@ -45,20 +45,21 @@ robotbit.MotorStopAll()
 basic.forever(function () {
     gerade_links = gerade_rad
     gerade_rechts = gerade_rad
-    kurve_links = kurve_rad
-    kurve_rechts = kurve_rad * -1
-    links_soll = gerade_links + kurve_links
-    rechts_soll = gerade_rechts + kurve_rechts
-    if (links_soll > 255) {
-        links_soll = 255
-    } else if (links_soll < -255) {
-        links_soll = -255
-    }
-    if (rechts_soll > 255) {
-        rechts_soll = 255
-    } else if (rechts_soll < -255) {
-        rechts_soll = -255
-    }
+    kurve_links = kurve_rad * -1
+    kurve_rechts = kurve_rad 
+
+    // if (links_soll > 255) {
+    //     links_soll = 255
+    // } else if (links_soll < -255) {
+    //     links_soll = -255
+    // }
+    links_soll = Math.min(Math.max(gerade_links + kurve_links, -255), 255)
+    rechts_soll = Math.min(Math.max(gerade_rechts + kurve_rechts, -255), 255)
+    // if (rechts_soll > 255) {
+    //     rechts_soll = 255
+    // } else if (rechts_soll < -255) {
+    //     rechts_soll = -255
+    // }
     if (links_ist < links_soll) {
         links_ist = Math.min(links_ist + 12, links_soll)
     } else if (links_ist > links_soll) {
@@ -75,5 +76,7 @@ basic.forever(function () {
         robotbit.MotorRun(motor_links, links_ist)
         robotbit.MotorRun(motor_rechts, rechts_ist)
     }
+    // serial.writeLine("links: " + motor_links + " rechts_ist: " + rechts_ist)
+
     basic.pause(30)
 })

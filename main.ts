@@ -19,6 +19,7 @@ radio.onReceivedValue(function (info, wert) {
     if (info == "kurve") {
         kurve_get = wert
         kurve_rad = Math.round(Math.map(kurve_get, -45, 45, -255, 255))
+
     } else if (info == "gerade") {
         gerade_get = wert
         gerade_rad = Math.round(Math.map(gerade_get, -45, 45, -255, 255))
@@ -40,10 +41,10 @@ radio.setGroup(26)
 lauf_flag = 0
 basic.showIcon(IconNames.Diamond)
 let motor_links = robotbit.Motors.M1A
-let motor_rechts = robotbit.Motors.M2B
+let motor_rechts = robotbit.Motors.M2A
 robotbit.MotorStopAll()
 basic.forever(function () {
-    gerade_links = gerade_rad
+    gerade_links = gerade_rad*1.2
     gerade_rechts = gerade_rad
     kurve_links = kurve_rad * -1
     kurve_rechts = kurve_rad 
@@ -78,5 +79,5 @@ basic.forever(function () {
     }
     // serial.writeLine("links: " + motor_links + " rechts_ist: " + rechts_ist)
 
-    basic.pause(30)
+    basic.pause(10)
 })
